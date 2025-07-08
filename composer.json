@@ -1,0 +1,25 @@
+{
+    "name": "bia/fitcalc",
+    "description": "Calculadora de IMC",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Bia\\Fitcalc\\": "fitCalc/",
+            "Controller\\": "Controller/",
+            "Model\\": "Model/"
+        },
+        "files": [
+            "Config/configuration.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Bianca Mota"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.0",
+        "ext-mbstring": "*"
+    }
+}
