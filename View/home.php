@@ -1,3 +1,30 @@
+<?php
+
+//ELE RECARREGA A PÁGINA PARA ENCONTRAR A CLASSE, SEM ELE O NAMEESPACE NÃO FUNCIONA 
+require_once '../vendor/autoload.php';
+
+use Model\Imcs;
+
+//CRIANDO UM OBJETO PARA REPRESENTAR CADA IMC CRIADO, A PARTIR DA CLASSE IMCS
+$imc = new Imcs();
+
+      //names que estão no html em um input
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if (isset($_POST['weight'], $_POST['height'])) {
+      $weight = $_POST['weight'];
+      $height = $_POST['height'];
+
+      // ROUND é igual ao tofixed() do JS
+      // Arredonda um float, retornando um valor formatado em 2 casas decimais
+      $result = round( $weight/($height * $height), 2);
+
+      //$IMC PEGA A FUNÇÃO CREATEIMC , E DEPOIS PASSA OS VALORES PARA O BANCO DE DADOS.
+      $imc->createImc($weight, $height, $result);
+    }
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
