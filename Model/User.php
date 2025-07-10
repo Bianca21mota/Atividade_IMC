@@ -52,9 +52,72 @@ class User {
         echo "Erro ao executar o comando" . $error->getMessage();
         return false;
       }
-
     }
-}
+
+       //LOGIN
+      public function getUserByEmail($email){
+       try{
+
+        //Selecione todas as informaçães do usuário e verifique se o email informado 
+        // é igual ao informado ao banco, e caso haja mais de 1 email igual, será retornado o primeiro.
+        $sql = "SELECT *FROM user WHERE email = :email LIMIT 1";
+         
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+      }catch (PDOException $error){}
+   }
+        //OBTER INFORMAÇÕES DO USUÁRIO
+       public function getUserInfo($id,$user_fullname, $email) {
+       try{
+          
+        //Selecione/obtenha o nome e email da tabela user, onde o id é igual ao id fornecido 
+        //: ocultar ou proteger um valor recebido pelo banco de dados
+        $sql = "SELECT user_fullname, email FROM user WHERE  id = :id AND user_fullname = :user_fullname AND email = :email";
+
+      $stmt = $this->db->prepare($sql);
+
+      $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+      $stmt->bindParam(":user_fullname", $user_fullname, PDO::PARAM_STR);
+      $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+  
+
+      /****
+       * fetch = queryselect();
+       * fetchAll = queryselectorAll();
+       * 
+       * FETCH_ASSOC :
+       * $user[
+       * "$user_fullname" => "teste",
+       * "email"=> "teste@example.com"
+       * ]
+       * 
+       * COMO OBTER INFORMAÇÕES:
+       * $user['user_fullname'];
+       */
+
+
+
+
+       //PDO::FETCH_ASSOC retorna apenas um único valor por nome de coluna.
+       //FETCH_ASSOC TRANSFORMA OS DADOS EM UM ARRAY ASSOCIATIVO E RETORNA ESSES DADOS NA TELA.
+       return $stmt->fetch( PDO::FETCH_ASSOC);
+
+       }catch (PDOException $error){
+         echo "Erro ao buscar informações: " . $error->getMessage();
+         return false;
+       }
+      }
+    }
+
 
 
 ?>
