@@ -28,12 +28,12 @@ $imcResult = null;
       $imcResult = $imcController->calculateImc($weight, $height);
 
       //VERIFICAR SE OS CAMPOS FORAM PREENCHIDOS
-      if ($imcResult ['BMIrange'] != "Por favor, informe o peso e altura para obter o seu IMC.") {}
-
-
+      if ($imcResult ['BMIrange'] != "O peso e a altura devem conter valores positivos.") {
+        // $imcResult ['imc'] Acesso do cálculo próprio do imc
+        $imcController->saveIMC($weight, $height, $imcResult ['imc']);
+        
+      }
     }
-
-    
 }
 
 
@@ -150,6 +150,16 @@ $imcResult = null;
                 <div class="result">
                     <div class="result__info">
                         <!-- RESULTADO DO IMC -->
+                        <!-- if (){} -->
+
+                         <?php if ($imcResult): ?>
+                            <p>Seu IMC é: <?php echo $imcResult['imc'] ?? ''; ?> </p>
+                            <p>Categoria: <?php echo $imcResult['BMIrange']; ?> </p>
+
+                            <?php else: ?>
+                                <i class="bi bi-calculator"></i>
+                                <p>Preencha os dados ao lado para ver o resultado</p>
+                            <?php endif; ?>
                     </div>
                 </div>
             </div>
