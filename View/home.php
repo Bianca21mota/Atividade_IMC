@@ -16,7 +16,7 @@ $imc = new Imcs();
 
       // ROUND é igual ao tofixed() do JS
       // Arredonda um float, retornando um valor formatado em 2 casas decimais
-      $result = round( $weight/($height * $height), 2);
+      //$result = round( $weight/($height * $height), 2);
 
       //$IMC PEGA A FUNÇÃO CREATEIMC , E DEPOIS PASSA OS VALORES PARA O BANCO DE DADOS.
       $imc->createImc($weight, $height, $result);
