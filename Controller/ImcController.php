@@ -71,7 +71,7 @@ public function calculateImc($weight, $height){
 public function saveIMC ($weight, $height, $IMCresult) {
     //por favor, acesse o imcsModel (tabela Imcs no BD) e a partir disso acesse a função createIMC 
     // (então execute os comandos sql) e use as variaveis ($weight, $height, $IMCresult)
-    //  intermediarias para passar os dados para o db
+    //  intermediarias para passar os dados para o db.
     return $this->imcsModel->createImc($weight, $height, $IMCresult);
 }
 }

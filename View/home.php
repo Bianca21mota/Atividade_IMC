@@ -3,10 +3,16 @@
 //ELE RECARREGA A PÁGINA PARA ENCONTRAR A CLASSE, SEM ELE O NAMEESPACE NÃO FUNCIONA 
 require_once '../vendor/autoload.php';
 
-use Model\Imcs;
+//IMPORTANDO O CONTROLLER
+use Controller\ImcController;
 
-//CRIANDO UM OBJETO PARA REPRESENTAR CADA IMC CRIADO, A PARTIR DA CLASSE IMCS
-$imc = new Imcs();
+//CRIANDO UM OBJETO PARA REPRESENTAR CADA IMC CRIADO, A PARTIR DA CLASSE IMCCONTROLLER
+$imcController = new ImcController();
+
+//var_dump mostra o que a variavel $imcController possui
+//var_dump($imcController);
+$imcResult = null;
+
 
       //names que estão no html em um input
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,9 +24,16 @@ $imc = new Imcs();
       // Arredonda um float, retornando um valor formatado em 2 casas decimais
       //$result = round( $weight/($height * $height), 2);
 
-      //$IMC PEGA A FUNÇÃO CREATEIMC , E DEPOIS PASSA OS VALORES PARA O BANCO DE DADOS.
-      $imc->createImc($weight, $height, $result);
+    //UTILIZANDO O CONTROLLER COMO INTERMEDIÁRIO DA MANIPULAÇÃO E GERENCIAMENTO DE DADOS FRONT/BACK (BANCO DE DADOS)
+      $imcResult = $imcController->calculateImc($weight, $height);
+
+      //VERIFICAR SE OS CAMPOS FORAM PREENCHIDOS
+      if ($imcResult ['BMIrange'] != "Por favor, informe o peso e altura para obter o seu IMC.") {}
+
+
     }
+
+    
 }
 
 
