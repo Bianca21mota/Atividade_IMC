@@ -45,7 +45,7 @@ class User {
         $stmt->bindParam(":password",$hashedpassword, PDO ::PARAM_STR);
 
         // EXECUTAR TUDO
-        $stmt->execute();
+        return $stmt->execute();
        
       } catch (PDOException $error) {
         //EXIBIR A MENSAGEM DE ERRO COMPLETA E PARAR A EXECUÇÃO

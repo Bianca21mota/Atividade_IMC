@@ -1,4 +1,6 @@
 <?php
+
+
 namespace Controller;
 
 use Model\User;
@@ -20,8 +22,7 @@ class UserController
             }
             //Envio para o banco de dados com os dados criptografados
             //$hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-            return $this->registerUser($user_fullname, $email, $password);
-
+            return $this->userModel->registerUser($user_fullname, $email, $password);
         } catch (Exception $error) {
             echo "Erro ao cadastrar usuário" . $error->getMessage();
             return false;
@@ -71,8 +72,6 @@ class UserController
     // RESGATAR DADOS DO USUÁRIO
     public function getUserData($id, $user_fullname, $email){
        
-        //armazenamento do id dentro de uma variavel  
-        $id= $_SESSION['id'];
         return $this->userModel->getUserInfo($id, $user_fullname, $email);
     }
 
