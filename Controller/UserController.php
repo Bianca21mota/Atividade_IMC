@@ -19,8 +19,8 @@ class UserController
                 return false;
             }
             //Envio para o banco de dados com os dados criptografados
-            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
-            return $this->registerUser($user_fullname, $email, $hashedpassword);
+            //$hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+            return $this->registerUser($user_fullname, $email, $password);
 
         } catch (Exception $error) {
             echo "Erro ao cadastrar usuário" . $error->getMessage();
@@ -28,28 +28,53 @@ class UserController
         }
     }
 
+
+    // EMAIL JÁ CADASTRADO?
+    //verifica se ja existe mais de um usuario com o mesmo email
+     public function CheckUserByEmail($email){
+     return $this->userModel->getUserByEmail($email);
+     }
+
     // LOGIN DE USUÁRIO
     public function login($email, $password)
     {
+        // Pegue todos os dados do usuário atraves do email
         $user = $this->userModel->getUserByEmail($email);
-        if ($user) {
-            if (crypt($password, $user['password'])) {
-                $_SESSION['id'] = $user['id'];
-                $_SESSION['user_fullname'] = $user['user_fullname'];
-                $_SESSION['email'] = $user['email'];
+       
 
-                return true;
-            } else {
-                return false;
-            }
+        /**
+         *$user = [
+         * "id" => 1,
+         * "user_fullname" => "Teste",
+         * "email" => "teste@example.com",
+         * "password" => "desfvggtcjhnhyfjmq23466567",
+         * 
+         *  ]
+         * * */
 
+          //verifica se os dados são iguais, ou seja, estão certos, retornando verdadeiro
+          //criptografa e compara com os dados do bd
+        if ($user && password_verify($password,$user['password'])) {
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['user_fullname'] = $user['user_fullname'];
+            $_SESSION['email'] = $user['email'];
+           
+            return true;
         }
         return false;
     }
     // USUÁRIO LOGADO?
+    public function isLoggedIn(){
+         return isset($_SESSION['id']);
+    }
 
     // RESGATAR DADOS DO USUÁRIO
-
+    public function getUserData($id, $user_fullname, $email){
+       
+        //armazenamento do id dentro de uma variavel  
+        $id= $_SESSION['id'];
+        return $this->userModel->getUserInfo($id, $user_fullname, $email);
+    }
 
 
 
